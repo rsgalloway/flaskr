@@ -43,6 +43,7 @@ def connect_db():
                               db=os.environ['RDS_DB_NAME']
                              )
 
+@app.route('/initdb')
 def init_db():
     conn = connect_db()
     if USE_BOTO:
