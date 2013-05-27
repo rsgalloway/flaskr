@@ -16,6 +16,7 @@ http://flask.pocoo.org/docs/tutorial/introduction/
 Adapted for Amazon AWS Elastic Beanstalk
 by Ryan Galloway <ryan@rsgalloway.com>
 
+http://github.com/rsgalloway/flaskr
 """
 
 DEBUG = True
@@ -63,7 +64,7 @@ def init_db():
 @app.before_request
 def before_request():
     flask.g.db = connect_db()
-    logging.info('before_request: db=%s' % g.db)
+    logging.info('before_request: db=%s' % flask.g.db)
 
 @app.teardown_request
 def teardown_request(exception):
