@@ -1,5 +1,5 @@
-Flaskr README
-=============
+Flaskr
+======
 
 A baseline Flask application suitable for use on Amazon Elastic Beanstalk.
 
@@ -12,14 +12,16 @@ Things you will need:
 
 
 Quickstart
------------
+----------
 
-- git clone http://github.com/rsgalloway/flaskr
-- cd flaskr
-- eb init
-- eb start
-- git aws.push
-- eb status --verbose
+::
+
+% git clone http://github.com/rsgalloway/flaskr
+% cd flaskr
+% eb init
+% eb start
+% git aws.push
+% eb status --verbose
 
 
 Changes
