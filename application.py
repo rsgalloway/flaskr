@@ -62,20 +62,20 @@ def init_db():
 
 @app.before_request
 def before_request():
-    g.db = connect_db()
+    flask.g.db = connect_db()
     logging.info('before_request: db=%s' % g.db)
 
 @app.teardown_request
 def teardown_request(exception):
-    g.db = None
+    flask.g.db = None
 
 @app.route('/')
 def show_entries():
     if USE_BOTO:
-        table = g.db.get_table('entries')
+        table = flask.g.db.get_table('entries')
         entries = table.scan()
     else:
-        cur = g.db.execute('select title, text from entries order by id desc')
+        cur = flask.g.db.execute('select title, text from entries order by id desc')
         entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     logging.info('show_entries: N=%s' % entries)
     return render_template('show_entries.html', entries=entries)
@@ -90,16 +90,16 @@ def add_entry():
     }
 
     if USE_BOTO:
-        table = g.db.get_table('entries')
+        table = flask.g.db.get_table('entries')
         item = table.new_item(
             hash_key=request.form['title'],
             attrs=item_data
         )
         item.put()
     else:
-        g.db.query("insert into entries (title, text) values ('%s', '%s')"
+        flask.g.db.query("insert into entries (title, text) values ('%s', '%s')"
                    % (flask.request.form['title'], flask.request.form['text']))
-        r = g.db.store_result()
+        r = flask.g.db.store_result()
 
     flask.flash('New entry was successfully posted')
     return flask.redirect(url_for('show_entries'))
