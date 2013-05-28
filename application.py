@@ -1,8 +1,8 @@
 import os
 import flask
-import logging
 import boto
 import MySQLdb
+import logging
 
 __doc__ = """
 Flaskr
@@ -19,9 +19,8 @@ by Ryan Galloway <ryan@rsgalloway.com>
 http://github.com/rsgalloway/flaskr
 """
 
-DEBUG = True
-
 # app.config stuff
+DEBUG = True
 SECRET_KEY = 'development key'
 USERNAME = 'admin'
 PASSWORD = 'default'

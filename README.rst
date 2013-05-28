@@ -3,6 +3,10 @@ Flaskr
 
 A baseline Flask application suitable for use on Amazon Elastic Beanstalk.
 
+Based on the flaskr tutorial:
+
+http://flask.pocoo.org/docs/tutorial/introduction/
+
 Things you will need:
 
 - Flask: http://flask.pocoo.org
