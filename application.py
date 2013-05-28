@@ -74,8 +74,9 @@ def show_entries():
         table = flask.g.db.get_table('entries')
         entries = table.scan()
     else:
-        cur = flask.g.db.cursor().execute('select title, text from entries order by id desc')
-        entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
+        curr = flask.g.db.cursor()
+        curr.execute('select title, text from entries order by id desc')
+        entries = [dict(title=row[0], text=row[1]) for row in curr.fetchall()]
     logging.info('show_entries: N=%s' % entries)
     return render_template('show_entries.html', entries=entries)
 
