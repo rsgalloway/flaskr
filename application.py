@@ -87,11 +87,11 @@ def show_entries():
 
 @app.route('/add', methods=['POST'])
 def add_entry():
-    if not session.get('logged_in'):
+    if not flask.session.get('logged_in'):
         flask.abort(401)
 
     item_data = {
-        'text': request.form['text'],
+        'text': flask.request.form['text'],
     }
 
     if USE_BOTO:
