@@ -21,6 +21,11 @@ http://github.com/rsgalloway/flaskr
 
 DEBUG = True
 
+# app.config stuff
+SECRET_KEY = 'development key'
+USERNAME = 'admin'
+PASSWORD = 'default'
+
 # use boto to manage aws rds instances, vs. _mysql
 USE_BOTO = False
 
