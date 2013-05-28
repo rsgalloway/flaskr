@@ -68,6 +68,8 @@ def init_db():
 def before_request():
     flask.g.db = connect_db()
     logging.info('before_request: db=%s' % flask.g.db)
+    logging.error('db=%s, user=%s, pass=%s'
+          % (os.environ['RDS_DB_NAME'], os.environ['RDS_USERNAME'], os.environ['RDS_PASSWORD']))
 
 @app.teardown_request
 def teardown_request(exception):
@@ -102,7 +104,7 @@ def add_entry():
         item.put()
     else:
         curr = flask.g.db.cursor()
-        curr.execute("insert into `entries` (`title`, `text`) values ('%s', '%s')"
+        curr.execute("insert into `entries` (`title`, `text`) values ('%s', '%s');"
                      %(flask.request.form['title'], flask.request.form['text']))
 
     flask.flash('New entry was successfully posted')
