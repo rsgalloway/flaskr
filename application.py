@@ -59,7 +59,7 @@ def init_db():
             write_units=10
         )
     else:
-        conn.execute(open("schema.sql"))
+        conn.cursor().execute(open("schema.sql").read())
 
 @app.before_request
 def before_request():
@@ -76,7 +76,7 @@ def show_entries():
         table = flask.g.db.get_table('entries')
         entries = table.scan()
     else:
-        cur = flask.g.db.execute('select title, text from entries order by id desc')
+        cur = flask.g.db.cursor().execute('select title, text from entries order by id desc')
         entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
     logging.info('show_entries: N=%s' % entries)
     return render_template('show_entries.html', entries=entries)
