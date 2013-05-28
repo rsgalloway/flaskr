@@ -14,7 +14,7 @@ Things you will need:
 Quickstart
 ----------
 
-Setting up the flas app ::
+Setting up the flaskr app ::
 
     % git clone http://github.com/rsgalloway/flaskr
     % cd flaskr

@@ -78,7 +78,7 @@ def show_entries():
         curr.execute('select title, text from entries order by id desc')
         entries = [dict(title=row[0], text=row[1]) for row in curr.fetchall()]
     logging.info('show_entries: N=%s' % entries)
-    return render_template('show_entries.html', entries=entries)
+    return flask.render_template('show_entries.html', entries=entries)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
