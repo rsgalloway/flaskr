@@ -44,7 +44,6 @@ def connect_db():
                               db=os.environ['RDS_DB_NAME']
                              )
 
-@app.route('/initdb')
 def init_db():
     if USE_BOTO:
         message_table_schema = flask.g.db.create_schema(
@@ -58,9 +57,7 @@ def init_db():
             write_units=10
         )
     else:
-        curr = flask.g.db.cursor()
-        for line in open("schema.sql"):
-            curr.execute(line)
+        flask.g.db.cursor().execute(open("schema.sql").read())
 
 @app.before_request
 def before_request():
