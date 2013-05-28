@@ -58,7 +58,9 @@ def init_db():
             write_units=10
         )
     else:
-        flask.g.db.cursor().execute(open("schema.sql").read())
+        curr = flask.g.db.cursor()
+        for line in open("schema.sql"):
+            curr.execute(line)
 
 @app.before_request
 def before_request():
