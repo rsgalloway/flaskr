@@ -90,11 +90,10 @@ def add_entry():
     if not flask.session.get('logged_in'):
         flask.abort(401)
 
-    item_data = {
-        'text': flask.request.form['text'],
-    }
-
     if USE_BOTO:
+        item_data = {
+            'text': flask.request.form['text'],
+        }
         table = flask.g.db.get_table('entries')
         item = table.new_item(
             hash_key=request.form['title'],
@@ -102,9 +101,9 @@ def add_entry():
         )
         item.put()
     else:
-        flask.g.db.query("insert into entries (title, text) values ('%s', '%s')"
-                   % (flask.request.form['title'], flask.request.form['text']))
-        r = flask.g.db.store_result()
+        curr = flask.g.db.cursor()
+        curr.execute("insert into `entries` (`title`, `text`) values ('%s', '%s')"
+                     %(flask.request.form['title'], flask.request.form['text']))
 
     flask.flash('New entry was successfully posted')
     return flask.redirect(flask.url_for('show_entries'))
