@@ -120,7 +120,7 @@ def login():
         else:
             flask.session['logged_in'] = True
             flask.flash('You were logged in')
-            return flask.redirect(url_for('show_entries'))
+            return flask.redirect(flask.url_for('show_entries'))
     return flask.render_template('login.html', error=error)
 
 @app.route('/logout')
