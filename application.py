@@ -62,14 +62,14 @@ def init_db():
             write_units=10
         )
     else:
-        flask.g.db.cursor().execute(open("schema.sql").read())
+        curr = flask.g.db.cursor()
+        curr.execute(open("schema.sql").read())
+        flask.g.db.commit()
 
 @app.before_request
 def before_request():
     flask.g.db = connect_db()
     logging.info('before_request: db=%s' % flask.g.db)
-    logging.error('db=%s, user=%s, pass=%s'
-          % (os.environ['RDS_DB_NAME'], os.environ['RDS_USERNAME'], os.environ['RDS_PASSWORD']))
 
 @app.teardown_request
 def teardown_request(exception):
@@ -106,6 +106,7 @@ def add_entry():
         curr = flask.g.db.cursor()
         curr.execute("insert into `entries` (`title`, `text`) values ('%s', '%s');"
                      %(flask.request.form['title'], flask.request.form['text']))
+        flask.g.db.commit()
 
     flask.flash('New entry was successfully posted')
     return flask.redirect(flask.url_for('show_entries'))
