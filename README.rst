@@ -46,13 +46,3 @@ Then source the schema file ::
 
     mysql> source schema.sql;
 
-
-Additions
----------
-
-The `.ebextensions` folder contains Python-specific settings,
-including the WSGI configuration and the environment variables
-which are used to supply the AWS Identity Key and Secret Key
-needed to use the APIs.  Make sure you update these values
-before deploying the system.
-

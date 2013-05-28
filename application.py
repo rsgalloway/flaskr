@@ -107,7 +107,7 @@ def add_entry():
         r = flask.g.db.store_result()
 
     flask.flash('New entry was successfully posted')
-    return flask.redirect(url_for('show_entries'))
+    return flask.redirect(flask.url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
