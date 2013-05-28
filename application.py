@@ -2,7 +2,7 @@ import os
 import flask
 import logging
 import boto
-import _mysql
+import MySQLdb
 
 __doc__ = """
 Flaskr
@@ -37,7 +37,7 @@ def connect_db():
                           aws_secret_access_key=os.environ['AWS_SECRET_KEY']
                           )
     else:
-        return _mysql.connect(host=os.environ['RDS_HOSTNAME'],
+        return MySQLdb.Connection(host=os.environ['RDS_HOSTNAME'],
                               user=os.environ['RDS_USERNAME'],
                               port=int(os.environ['RDS_PORT']),
                               passwd=os.environ['RDS_PASSWORD'],
@@ -46,9 +46,8 @@ def connect_db():
 
 @app.route('/initdb')
 def init_db():
-    conn = connect_db()
     if USE_BOTO:
-        message_table_schema = conn.create_schema(
+        message_table_schema = flask.g.db.create_schema(
             hash_key_name='title',
             hash_key_proto_value='S',
         )
@@ -59,7 +58,7 @@ def init_db():
             write_units=10
         )
     else:
-        conn.cursor().execute(open("schema.sql").read())
+        flask.g.db.cursor().execute(open("schema.sql").read())
 
 @app.before_request
 def before_request():
