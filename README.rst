@@ -11,7 +11,7 @@ Things you will need:
 
 - Flask: http://flask.pocoo.org
 - AWS 'eb' tool: http://aws.amazon.com/developertools/351/
-- AWS API keys: https://aws-portal.amazon.com/gp/aws/securityCredentials
+- AWS API keys: https://console.aws.amazon.com/iam/home?#users
 - Git: http://git-scm.com
 
 
@@ -27,7 +27,15 @@ Quickstart
     % git aws.push
     % eb status --verbose
 
-**Initializing the DB**
+**Initializing the app**
+
+If everything worked as expected, then you should be able to init the db by requesting
+the '/init' route at your new flaskr environment URL, for example ::
+
+    http://flaskr-env.elasticbeanstalk.com/init
+
+This sets up the 'entries' table in the RDS database. You can also follow the more manual steps
+outlined below.
 
 If you are using MySql on AWS via an RDS instance you must add the IP address you want to connect
 from to the "DB Security Groups". To do this go to your AWS Managment Console and select RDS.

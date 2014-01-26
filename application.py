@@ -49,6 +49,7 @@ def connect_db():
                              )
 
 def init_db():
+    logging.info('initializing the db')
     if USE_BOTO:
         message_table_schema = flask.g.db.create_schema(
             hash_key_name='title',
@@ -85,6 +86,14 @@ def show_entries():
         entries = [dict(title=row[0], text=row[1]) for row in curr.fetchall()]
     logging.info('show_entries: N=%s' % entries)
     return flask.render_template('show_entries.html', entries=entries)
+
+@app.route('/init')
+def init():
+    try:
+        init_db()
+    except Exception, err:
+        logging.error('error initializing the db: %s' % err)
+    return redirect('/') 
 
 @app.route('/add', methods=['POST'])
 def add_entry():
